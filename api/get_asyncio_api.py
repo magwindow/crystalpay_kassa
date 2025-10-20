@@ -3,7 +3,8 @@ from utils.models import (CheckoutBalance,
                           CheckoutBalancesCoins,
                           CheckoutMe, 
                           PaymentMethods, 
-                          PaymentMethod
+                          PaymentMethod,
+                          BaseCrystalPayModels
                           )
  
 
@@ -38,3 +39,21 @@ class _Payment(_BaseCrystalPayIO):
             errors=response["errors"],
             method=PaymentMethod.model_validate(response["methods"])
         )
+        
+    async def edit(self, method: str, extra_commission_percent: int, enabled: bool) -> BaseCrystalPayModels:
+        """Changing payment method settings.
+        :param method: Payment method, for example: LZTMARKET, BITCOIN.
+        :param extra_commission_percent: Additional cash desk commission for the payment method (in percent).
+        :param enabled: Enable/disable payment method.
+        """
+
+        self._DEFAULT_PAYLOAD.update(
+            {
+                "method": method,
+                "extra_commission_percent": extra_commission_percent,
+                "enabled": enabled,
+            }
+        )
+
+        response = await self._make_request("method/edit", "post", json=self._DEFAULT_PAYLOAD)
+        return BaseCrystalPayModels.model_validate(response)
