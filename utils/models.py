@@ -1,4 +1,4 @@
-from typing import List, Literal, Optional
+from typing import Dict, List, Literal, Optional
 from datetime import datetime
 
 from pydantic import BaseModel
@@ -136,3 +136,71 @@ class PaymentInvoiceInfo(BaseCrystalPayModels):
     extra: Optional[str]
     created_at: datetime
     expired_at: datetime
+    
+    
+class PayoffCreate(BaseCrystalPayModels):
+    id: str
+    method: str
+    commission: int | float
+    amount: int | float
+    rub_amount: int | float
+    receive_amount: int | float
+    deduction_amount: int | float
+    subtract_from: str
+    currency: str
+    
+    
+class PayoffAction(BaseCrystalPayModels):
+    id: str
+    state: str
+    method: str
+    currency: str
+    commission: int | float
+    amount: int | float
+    rub_amount: int | float
+    receive_amount: int | float
+    deduction_amount: int | float
+    subtract_from: str
+    wallet: str
+    message: str
+    callback_url: str
+    extra: str
+    created_at: str
+    
+    
+class Tickers(BaseCrystalPayModels):
+    tickers: List[str]
+
+
+class TickersData(BaseCrystalPayModels):
+    base_currency: str
+    currencies: Dict[str, int | float]
+    
+
+class HistoryBaseData(BaseModel):
+    id: str
+    state: str
+    method: Optional[str]
+    currency: str
+    amount: int | float
+    created_at: str
+    expired_at: Optional[str] = None
+
+
+class HistoryPayments(BaseCrystalPayModels):
+    payments: List[HistoryBaseData]
+    
+
+class HistoryPayoffs(BaseCrystalPayModels):
+    payoffs: List[HistoryBaseData]
+    
+    
+class HistorySummaryData(BaseModel):
+    payed_amount: int | float
+    total_count: int | float
+    payed_count: int | float
+
+
+class HistorySummary(BaseCrystalPayModels):
+    incoming: HistorySummaryData
+    outgoing: HistorySummaryData
