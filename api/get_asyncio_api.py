@@ -1,8 +1,11 @@
-from typing import Any
-
-from utils.models import CheckoutBalance, CheckoutBalancesCoins, CheckoutMe  
 from utils.base import _BaseCrystalPayIO
-
+from utils.models import (CheckoutBalance,
+                          CheckoutBalancesCoins,
+                          CheckoutMe, 
+                          PaymentMethods, 
+                          PaymentMethod
+                          )
+ 
 
 
 class _Checkout(_BaseCrystalPayIO):
@@ -17,9 +20,21 @@ class _Checkout(_BaseCrystalPayIO):
         """
         self._DEFAULT_PAYLOAD.update({"hide_empty": hide_empty})
         response = await self._make_request("balance/info", "post", json=self._DEFAULT_PAYLOAD)
-        print(response)
+        # print(response["balances"])
         return CheckoutBalance(
             error=response["error"],
             errors=response["errors"],
             balances=CheckoutBalancesCoins.model_validate(response["balances"])
+        )
+        
+
+class _Payment(_BaseCrystalPayIO):
+    async def methods(self) -> PaymentMethods:
+        """Obtaining information on payment methods."""
+        response = await self._make_request("method/list", "post", json=self._DEFAULT_PAYLOAD)
+        # print(response)
+        return PaymentMethods(
+            error=response["error"],
+            errors=response["errors"],
+            method=PaymentMethod.model_validate(response["methods"])
         )

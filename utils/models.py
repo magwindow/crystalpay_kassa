@@ -56,3 +56,54 @@ class CheckoutBalancesCoins(BaseModel):
     
 class CheckoutBalance(BaseCrystalPayModels):
     balances: CheckoutBalancesCoins
+    
+
+class PaymentMethodData(BaseModel):
+    name: str
+    enabled: bool
+    extra_commission_percent: int | float
+    minimal_status_level: int
+    currency: str
+    commission_percent: int | float
+    commission: int | float
+
+
+class PaymentMethod(BaseModel):
+    BITCOIN: PaymentMethodData
+    BITCOINCASH: PaymentMethodData
+    BNBCRYPTOBOT: PaymentMethodData
+    BNBSMARTCHAIN: PaymentMethodData
+    BTCCRYPTOBOT: PaymentMethodData
+    CARDKZTP2P: PaymentMethodData
+    CARDRUB: PaymentMethodData
+    CARDRUBP2P: PaymentMethodData
+    CARDRUBTRANSP2P: PaymentMethodData
+    CRYSTALPAY: PaymentMethodData
+    DASH: PaymentMethodData
+    DOGECOIN: PaymentMethodData
+    ETHCRYPTOBOT: PaymentMethodData
+    ETHEREUM: PaymentMethodData
+    LITECOIN: PaymentMethodData
+    LTCCRYPTOBOT: PaymentMethodData
+    LZTMARKET: PaymentMethodData
+    MONERO: PaymentMethodData
+    POLYGON: PaymentMethodData
+    SBERPAYP2P: PaymentMethodData
+    SBP: PaymentMethodData
+    SBPP2P: PaymentMethodData
+    SBPTRANSP2P: PaymentMethodData
+    SOLANA: PaymentMethodData
+    TEST: PaymentMethodData
+    TONCOIN: PaymentMethodData
+    TONCRYPTOBOT: PaymentMethodData
+    TRON: PaymentMethodData
+    USDCSPL: PaymentMethodData
+    USDTBEP: PaymentMethodData
+    USDTCRYPTOBOT: PaymentMethodData
+    USDTPOL: PaymentMethodData
+    USDTSPL: PaymentMethodData
+    USDTTRC: PaymentMethodData
+
+
+class PaymentMethods(BaseCrystalPayModels):
+    method: PaymentMethod
