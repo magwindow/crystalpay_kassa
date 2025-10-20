@@ -7,7 +7,8 @@ from utils.models import (CheckoutBalance,
                           PaymentMethods, 
                           PaymentMethod,
                           BaseCrystalPayModels,
-                          PaymentInvoice
+                          PaymentInvoice,
+                          PaymentInvoiceInfo
                           )
  
 
@@ -108,3 +109,14 @@ class _Invoice(_BaseCrystalPayIO):
 
         response = await self._make_request("invoice/create", "post", json=self._DEFAULT_PAYLOAD)
         return PaymentInvoice.model_validate(response)
+    
+    
+    async def get(self, id: str) -> PaymentInvoiceInfo:
+        """Retrieve payment invoice information.
+
+        :param id: The identifier of the payment invoice.
+        """
+
+        self._DEFAULT_PAYLOAD.update({"id": id})
+        response = await self._make_request("invoice/info", "post", json=self._DEFAULT_PAYLOAD)
+        return PaymentInvoiceInfo.model_validate(response)

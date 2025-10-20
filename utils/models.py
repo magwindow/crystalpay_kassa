@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Literal, Optional
 from datetime import datetime
 
 from pydantic import BaseModel
@@ -114,3 +114,25 @@ class PaymentInvoice(BaseCrystalPayModels):
     url: str
     amount: int | float
     type: str
+    
+    
+class PaymentInvoiceInfo(BaseCrystalPayModels):
+    id: str
+    url: str
+    state: str
+    type: Literal["purchase", "topup"]
+    method: Optional[str]
+    required_method: Optional[str]
+    currency: str
+    service_commission: int | float
+    extra_commission: int | float
+    amount: int | float
+    pay_amount: int | float
+    remaining_amount: int | float
+    balance_amount: int | float
+    description: Optional[str]
+    redirect_url: str
+    callback_url: Optional[str]
+    extra: Optional[str]
+    created_at: datetime
+    expired_at: datetime
