@@ -107,3 +107,10 @@ class PaymentMethod(BaseModel):
 
 class PaymentMethods(BaseCrystalPayModels):
     method: PaymentMethod
+    
+
+class PaymentInvoice(BaseCrystalPayModels):
+    id: str
+    url: str
+    amount: int | float
+    type: str

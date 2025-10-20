@@ -1,5 +1,5 @@
 from utils.base import _BaseCrystalPayIO
-from api.get_asyncio_api import _Checkout, _Payment
+from api.get_asyncio_api import _Checkout, _Payment, _Invoice
 
 __all__ = ["CrystalPayIO"]
 
@@ -12,3 +12,7 @@ class CrystalPayIO(_BaseCrystalPayIO):
     @property
     def payment(self) -> _Payment:
         return _Payment(self._login, self._secret)
+    
+    @property
+    def invoice(self) -> _Invoice:
+        return _Invoice(self._login, self._secret)

@@ -5,7 +5,7 @@ from config import LOGIN, SECRET
 
 async def main():
     async with CrystalPayIO(LOGIN, SECRET) as crystalpayio:
-        x = await crystalpayio.payment.edit(method="TEST", extra_commission_percent=0, enabled=True)
+        x = await crystalpayio.invoice.create(1, 10, "purchase")
         print(x)
         
 
